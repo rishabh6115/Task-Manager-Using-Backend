@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/main.css">
+    <link rel="stylesheet" href="/new.css">
+    <link rel="stylesheet" href="/edit.css">
+</head>
+<body>
+    <div class="form">
+        <h1>Edit Task</h1>
+        
+        <form action="/task/<%= foundtask.id %>?_method=patch " method="post">
+            <label for="work">EditWork</label>
+            <textarea name="work" id="work" cols="20" rows="2"><%= foundtask.work %> </textarea>
+            <label for="time">Enter Time</label>
+           <textarea name="time" id="time" cols="10" rows="1"><%= foundtask.time %> </textarea>
+            <button><a>Save</a>  </button>
+        </form>
+        <div class="back">
+        <a href="/task">All Tasks</a>
+        <form action="/task/<%= foundtask.id %>?_method=delete " method="post">
+            <button><a>Delete</a></button>
+        </form>
+    </div>
+    </div>  
+
+
+
+
+</body>
+</html>

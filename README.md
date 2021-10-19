@@ -2,9 +2,9 @@
 
 ## Simple Task Manager where you can perform basic operations such as Add Task, Modify Tast, Delete Task, View All Task
 
-## steps to perform-
+# steps to perform-
 
-## Make sure you have NodeJS installed
+### Make sure you have NodeJS installed
 ### Clone the repository
 ### Run command - "npm i" to install missing dependencies
 ### Run command - "node index.js"

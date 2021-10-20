@@ -22,6 +22,7 @@ form{
 }
 .ind{
     text-align: center;
+    margin-bottom: 18px;
 }
 
 @media (max-width:670px){

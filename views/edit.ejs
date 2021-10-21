@@ -13,7 +13,7 @@
     <div class="form">
         <h1>Edit Task</h1>
         
-        <form action="/task/<%= foundtask.id %>?_method=patch " method="post">
+        <form action="/task/<%= foundtask._id %>?_method=put " method="post">
             <label for="work">EditWork</label>
             <textarea name="work" id="work" cols="20" rows="2"><%= foundtask.work %> </textarea>
             <label for="time">Enter Time</label>

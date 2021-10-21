@@ -2,32 +2,20 @@ const express = require('express')
 const app=express()
 const path=require('path')
 const methodOverride= require('method-override')
-const { v4: uuid } = require('uuid');
-
-let task=[
-    {
-        id:uuid(),
-        work:'Water plants',
-        time:'2pm'
-    },
-    {
-        id:uuid(),
-        work:'Study',
-        time:'3pm'
-    },
-    {
-        id:uuid(),
-        work:'Dance Practice',
-        time:'6pm'
-    }
+const mongoose = require('mongoose');
+const Task = require('./task');
 
 
-]
+mongoose.connect('mongodb://localhost:27017/taskManager', { useNewUrlParser: true, useUnifiedTopology: true })
+    .then(() => {
+        console.log("MONGO CONNECTION OPEN!!!")
+    })
+    .catch(err => {
+        console.log("OH NO MONGO CONNECTION ERROR!!!!")
+        console.log(err)
+    })
 
-
-
-
-
+    
 app.set('view engine','ejs')
 app.use(express.urlencoded({extended:true}))
 app.use(methodOverride('_method'))
@@ -39,37 +27,34 @@ app.get('/',(req,res)=>{
 })
 
 
-app.get('/task',(req,res)=>{
+app.get('/task',async(req,res)=>{
+    const task= await Task.find({})
     res.render('home.ejs',{task})
 })
 app.get('/task/new',(req,res)=>{
     res.render('new.ejs')
 })
-app.post('/task',(req,res)=>{
-    const{work,time}=req.body
-    task.push({work,time,id:uuid()})
+app.post('/task',async(req,res)=>{
+    const newTask=new Task(req.body)
+    await newTask.save()
     res.redirect('/task')
 })
 
-app.get('/task/:id/edit',(req,res)=>{
+app.get('/task/:id/edit',async(req,res)=>{
     const {id}=req.params
-    const foundtask=task.find(c=>c.id===id)
+    const foundtask=await Task.findById(id)
     res.render('edit.ejs',{foundtask})
 })
-app.patch('/task/:id/',(req,res)=>{
-    const {id}=req.params
-    const foundtask=task.find(c=>c.id===id)
-    const newtask=req.body.work
-    const newtime=req.body.time
-    foundtask.time=newtime
-    foundtask.work=newtask
+app.put('/task/:id/',async(req,res)=>{
+    const {id}=req.params 
+    const foundtask=await Task.findByIdAndUpdate(id,req.body,{runValidators:true,new:true})
     res.redirect('/task')
 })
 
-app.delete('/task/:id/',(req,res)=>{
+app.delete('/task/:id/',async (req,res)=>{
     const {id}=req.params
-  task= task.filter(c=>c.id !== id)
-   res.redirect('/task')
+    const foundtask=await Task.findByIdAndDelete(id)
+    res.redirect('/task')
 })
 
 app.listen(3000,()=>{

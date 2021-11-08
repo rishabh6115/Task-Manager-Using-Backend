@@ -10,8 +10,7 @@ mongoose.connect('mongodb://localhost:27017/taskManager', { useNewUrlParser: tru
         console.log("OH NO MONGO CONNECTION ERROR!!!!")
         console.log(err)
     })
-
-
+ 
     const seedProducts=[
         {
             work:'Water plants',
@@ -26,7 +25,11 @@ mongoose.connect('mongodb://localhost:27017/taskManager', { useNewUrlParser: tru
             time:'6pm'
         }
     ]
-    
-    Task.insertMany(seedProducts)
-    .then(r=>console.log(r))
-    .catch(e=>console.log(e))
+    const ins=async()=>{
+    await Task.deleteMany({})
+    await Task.insertMany(seedProducts)
+    mongoose.connection.close();
+    }
+    ins();
+    // .then(r=>console.log(r))
+    // .catch(e=>console.log(e))

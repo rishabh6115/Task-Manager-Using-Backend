@@ -15,4 +15,4 @@
 
  4.Run command - `node seed.js` then run `node index.js`
 
- 5.Head over to `http://localhost:3000/` in your browser.
+ 5.Head over to `http://localhost:4000/` in your browser.
